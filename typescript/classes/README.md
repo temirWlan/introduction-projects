@@ -1,0 +1,7 @@
+- define class property in constructor arguments, ts will create this.property = property 
+- Modifiers:
+  - 'protected' - will be available in class and child classes that extends from parent
+  - 'private'- will be available only in classes, but not in child classes
+  - 'public' - declare public property that will be available in class and child classes, also in outside of class
+- 'abstract' - base class that have min necessary properties for children
+- 'guards' - apply when several variants 

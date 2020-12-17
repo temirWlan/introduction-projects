@@ -1,0 +1,2 @@
+- Array<number> - Class<type>
+- '<T>(arg: T): T' - different types without error
