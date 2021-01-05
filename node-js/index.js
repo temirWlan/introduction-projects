@@ -38,6 +38,23 @@ const server = http.createServer((req, res) => {
           }
         )
         break;
+      case '/api/users':
+        res.writeHead(200, {
+          'Content-Type': 'text/json'
+        });
+        fs.readFile(
+          path.join(__dirname, 'db.json'),
+          (err, data) => {
+            if (err) {
+              throw new Error(err);
+            }
+
+            res.end(data);
+          }
+        );
+        break;
+      default: 
+          res.end(`<h1>Page not found</h1>`);
     }
       
   } else if (req.method === 'POST') {
