@@ -14,6 +14,8 @@ Main properties&methods:
 - status(responseStatus) - add response status, for example: 200, 404, 500, etc.
 - sendFile(path) - transfers the file at the given path and set 'Content-Type'
 
+# ROUTER
+- Router - create and add routes
 
 # EXPRESS-HANDLEBARS
 Advices and addtional info:
