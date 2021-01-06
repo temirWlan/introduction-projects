@@ -14,6 +14,10 @@ Main properties&methods:
 
 
 # EXPRESS-HANDLEBARS
+Advices and addtional info:
+- express-handlebars simplifies working and rendering with html pages
+- partials - layout parts, {{> partial }}
+
 Main properties&methods:
 # app
 - engine - register handlebars in express
@@ -25,4 +29,4 @@ Main properties&methods:
   config example: { defaultLayout: 'main', 'extname': 'hbs' }
 
 # response
-- render(path) - render file
+- render(path) - render file, path without extname

@@ -15,11 +15,11 @@ app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 app.get('/', (req, res) => {
-	res.render();
+	res.render('index');
 });
 
 app.get('/about', (req, res) => {
-	res.render();
+	res.render('about');
 });
 
 app.listen(PORT, () => {
