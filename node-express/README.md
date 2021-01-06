@@ -4,6 +4,8 @@ INTRODUCTION TO Express.js
 Main properties&methods:
 
 # app
+- use(options) - write own middleware
+- static(directory) - set static directory
 - listen(path, callback) - listens for connections on the given path
 - get(path, callback) - routes HTTP GET requests to the specified path with the specified callback functions
   callback arguments: req, res, next
