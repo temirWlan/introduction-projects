@@ -31,4 +31,4 @@ Main properties&methods:
   config example: { defaultLayout: 'main', 'extname': 'hbs' }
 
 # response
-- render(path) - render file, path without extname
+- render(path, options) - render file, path without extname, options - optional object
