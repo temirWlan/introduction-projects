@@ -11,7 +11,8 @@ class Course {
 	}
 
 	async save() {
-		const { courses } = await Course.getAll();
+		debugger;
+		const courses = await Course.getAll();
 		courses.push({
 			title: this.title,
 			price: this.price,
@@ -21,7 +22,7 @@ class Course {
 
 		return new Promise((resolve, reject) => {
 			fs.writeFile(
-				path.join(__dirname, '..', 'data', 'db.json'), 
+				path.join(__dirname, '..', 'data', 'courses.json'), 
 				JSON.stringify(courses),
 				err => {
 					if (err) {
@@ -37,7 +38,7 @@ class Course {
 	static getAll() {
 		return new Promise((resolve, reject) => {
 			fs.readFile(
-				path.join(__dirname, '..', 'data', 'db.json'), 
+				path.join(__dirname, '..', 'data', 'courses.json'), 
 				'utf-8', 
 				(err, data) => {
 					if (err) {
