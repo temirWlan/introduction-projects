@@ -1,6 +1,9 @@
 INTRODUCTION TO Express.js
 
 EXPRESS
+Advices or additional info:
+- path can be dynamic, for example: /:id
+
 Main properties&methods:
 
 express
@@ -14,6 +17,10 @@ app
 - get(path, callback) - routes HTTP GET requests to the specified path with the specified callback functions
   callback arguments: req, res, next
 
+request
+- params - route parameters, default value - {}
+- query - object containing a property for each query string parameter in the route, default value - {}
+
 response
 - status(responseStatus) - add response status, for example: 200, 404, 500, etc.
 - sendFile(path) - transfers the file at the given path and set 'Content-Type'
@@ -24,7 +31,7 @@ ROUTER
 
 
 EXPRESS-HANDLEBARS
-Advices and addtional info:
+Advices or additional info:
 - express-handlebars simplifies working and rendering with html pages
 - partials - layout parts, {{> partial }}
 
