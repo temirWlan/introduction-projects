@@ -3,12 +3,6 @@ const Course = require('../models/course');
 const Cart = require('../models/cart');
 const router = Router();
 
-router.post('/cart/add', async(req, res) => {
-	const course = await Course.getById(req.body.id);
-	await Cart.add(course);
-	res.redirect('/cart');
-});
-
 router.get('', async(req, res) => {
 	const cart = await Cart.fetch();
 
@@ -16,8 +10,19 @@ router.get('', async(req, res) => {
 		title: 'Cart',
 		isCart: true,
 		courses: cart.courses,
-		price: cart.prices
+		price: cart.price
 	});
+});
+
+router.post('/add', async(req, res) => {
+	const course = await Course.getById(req.body.id);
+	await Cart.add(course);
+	res.redirect('/cart');
+});
+
+router.delete('/remove/:id', async(req, res) => {
+	const cart = await Cart.remove(req.params.id);
+	res.status(200).json(cart);
 });
 
 module.exports = router;
