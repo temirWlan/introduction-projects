@@ -36,7 +36,7 @@ app.set('views', 'views');
 
 async function start() {
 	try {
-		const url = 'mongodb+srv://temirlan:6QzGLVlMhMD3rao0@cluster0.cmepq.mongodb.net/shop?retryWrites=true&w=majority';
+		const url = 'mongodb+srv://temirlan:6QzGLVlMhMD3rao0@cluster0.cmepq.mongodb.net/shop';
 		await mongoose.connect(url, { 
 			useNewUrlParser: true,
 			useUnifiedTopology: true
