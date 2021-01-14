@@ -8,6 +8,7 @@ const homeRoutes = require('./routes/home');
 const coursesRoutes = require('./routes/courses');
 const addRoutes = require('./routes/add');
 const cartRoutes = require('./routes/cart');
+const ordersRoutes = require('./routes/orders');
 const User = require('./models/user');
 
 const app = express();
@@ -35,6 +36,7 @@ app.use('/', homeRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/add', addRoutes);
 app.use('/cart', cartRoutes);
+app.use('/orders', ordersRoutes);
 
 
 app.engine('hbs', exphbs({
