@@ -1,5 +1,6 @@
 const path = require('path');
 const express = require('express');
+const session = require('express-session');
 const mongoose = require('mongoose');
 const Handlebars = require('handlebars');
 const exphbs  = require('express-handlebars');
@@ -9,34 +10,28 @@ const coursesRoutes = require('./routes/courses');
 const addRoutes = require('./routes/add');
 const cartRoutes = require('./routes/cart');
 const ordersRoutes = require('./routes/orders');
+const authRoutes = require('./routes/auth');
 const User = require('./models/user');
+const varMiddleware = require('./middlewares/variables');
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-// const hbs = exphbs.create({
-// 	defaultLayout: 'main',
-// 	extname: 'hbs'
-// });
-// hbs.engine
-
-app.use(async (req, res, next) => {
-	try {
-		const user = await User.findById('5ffe5a2a98a9e80498104426');
-		req.user = user;
-		next();
-	} catch(e) {
-		console.log(e);
-	}
-});
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
+app.use(session({
+	secret: 'secret text',
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(varMiddleware);
 app.use('/', homeRoutes);
 app.use('/courses', coursesRoutes);
 app.use('/add', addRoutes);
 app.use('/cart', cartRoutes);
 app.use('/orders', ordersRoutes);
+app.use('/auth', authRoutes);
 
 
 app.engine('hbs', exphbs({
@@ -55,19 +50,19 @@ async function start() {
 			useUnifiedTopology: true
 		});
 
-		const candidate = await User.findOne();
+		// const candidate = await User.findOne();
 
-		if (!candidate) {
-			const user = new User({
-				email: 'temirlan.balguzhin@bk.ru',
-				name: 'Temirlan',
-				cart: {
-					items: []
-				}
-			});
+		// if (!candidate) {
+		// 	const user = new User({
+		// 		email: 'temirlan.balguzhin@bk.ru',
+		// 		name: 'Temirlan',
+		// 		cart: {
+		// 			items: []
+		// 		}
+		// 	});
 
-			await user.save();
-		}
+		// 	await user.save();
+		// }
 
 		app.listen(PORT, () => {
 		  console.log('Server running...');

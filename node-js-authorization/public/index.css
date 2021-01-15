@@ -35,3 +35,19 @@
 .red-remove-btn {
 	margin-top: 20px;
 }
+
+.auth {
+	padding-top: 20;
+}
+
+.auth-form {
+	align-items: center;
+}
+
+.auth-tab {
+	align-items: center;
+}
+
+.auth-form-btn {
+	margin-left: 0 auto;
+}

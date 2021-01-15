@@ -56,4 +56,6 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	}
+
+	const tabs = M.Tabs.init(document.querySelector('.tabs'));
 });
