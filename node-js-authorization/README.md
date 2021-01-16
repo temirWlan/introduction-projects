@@ -22,3 +22,8 @@
 		uri: string - MongoDB connection string
 		databaseName: string - MongoDB database to store sessions in
 		collection: string - MongoDB collection to store sessions in
+
+# bcryptjs
+	Main properties&methods:
+		- hash(password, salt) - hash password
+		- compare(password, hashPassword) - compare two passwords
