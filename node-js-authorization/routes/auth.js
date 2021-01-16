@@ -10,24 +10,63 @@ router.get('/login', async (req, res) => {
 	});
 });
 
-router.post('/login', async (req, res) => {
-	const user = await User.findById('5ffe5a2a98a9e80498104426');
-
-	req.session.user = user;
-	req.session.isAuthenticated = true;
-	req.session.save(err => {
-		if (err) {
-			throw new Error(err);
-		}
-		
-		res.redirect('/');
-	});
-});
-
 router.get('/logout', async (req, res) => {
 	req.session.destroy(() => {
 		res.redirect('/auth/login#login');
 	});
+});
+
+router.post('/login', async (req, res) => {
+	try {
+		const { email, password } = req.body;
+		const candidate = await User.findOne({ email });
+
+		if (candidate) {
+			const isSame = candidate.password === password;
+
+			if (isSame) {
+				req.session.user = candidate;
+				req.session.isAuthenticated = true;
+				req.session.save(err => {
+					if (err) {
+						throw new Error(err);
+					}
+					
+					res.redirect('/');
+				});
+			} else {
+				res.redirect('/auth/login');	
+			}
+		} else {
+			res.redirect('/auth/login');
+		}
+	} catch(e) {
+		console.log(e);
+	}
+});
+
+router.post('/register', async (req, res) => {
+	try {
+		const { name, email, password, confirm } = req.body;
+		const candidate = await User.findOne({ email });
+
+		if (candidate) {
+			res.redirect('/auth/login#register');
+		} else {
+			const user = new User({
+				name, 
+				email, 
+				password, 
+				cart: { 
+					items: []
+				}
+			});
+			await user.save();
+			res.redirect('/auth/login#login');
+		}
+	} catch(e) {
+		console.log(e);
+	}
 });
 
 module.exports = router;
