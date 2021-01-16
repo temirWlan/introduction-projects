@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
+const MongoStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const Handlebars = require('handlebars');
 const exphbs  = require('express-handlebars');
@@ -17,13 +18,20 @@ const varMiddleware = require('./middlewares/variables');
 const app = express();
 
 const PORT = process.env.PORT || 3000;
+const MONGODB_URI = 'mongodb+srv://temirlan:6QzGLVlMhMD3rao0@cluster0.cmepq.mongodb.net/shop';
+
+const store = new MongoStore({
+	collection: 'sessions',
+	uri: MONGODB_URI
+});
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
 	secret: 'secret text',
 	resave: false,
-	saveUninitialized: false
+	saveUninitialized: false,
+	store
 }));
 app.use(varMiddleware);
 app.use('/', homeRoutes);
@@ -44,25 +52,10 @@ app.set('views', 'views');
 
 async function start() {
 	try {
-		const url = 'mongodb+srv://temirlan:6QzGLVlMhMD3rao0@cluster0.cmepq.mongodb.net/shop';
-		await mongoose.connect(url, { 
+		await mongoose.connect(MONGODB_URI, { 
 			useNewUrlParser: true,
 			useUnifiedTopology: true
 		});
-
-		// const candidate = await User.findOne();
-
-		// if (!candidate) {
-		// 	const user = new User({
-		// 		email: 'temirlan.balguzhin@bk.ru',
-		// 		name: 'Temirlan',
-		// 		cart: {
-		// 			items: []
-		// 		}
-		// 	});
-
-		// 	await user.save();
-		// }
 
 		app.listen(PORT, () => {
 		  console.log('Server running...');
