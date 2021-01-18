@@ -27,3 +27,8 @@
 	Main properties&methods:
 		- hash(password, salt) - hash password
 		- compare(password, hashPassword) - compare two passwords
+
+# csurf
+	Main properties&methods:
+		- csrfToken() - function to make a token which should be added to requests which mutate state,
+										this token is validated against the visitor's session or csrf cookie

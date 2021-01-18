@@ -33,9 +33,13 @@ window.addEventListener('DOMContentLoaded', () => {
 			
 			if (target.classList.contains('cart-remove-btn')) {
 				const id = target.dataset.id;
+				const token = target.dataset.token;
 
 				fetch(`/cart/remove/${id}`, {
-					method: 'DELETE'
+					method: 'DELETE',
+					headers: {
+				    'CSRF-Token': token
+				  }
 				}).then(res => res.json())
 					.then(cart => {
 						const row = cart.courses.map(({ title, count, id }) => {
