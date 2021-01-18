@@ -51,3 +51,10 @@
 .auth-form-btn {
 	margin-left: 0 auto;
 }
+
+.alert {
+	padding: 10px 20px;
+	border-radius: 10px;
+	background-color: rgba(255, 0, 0, 0.3);
+	text-align: center;
+}

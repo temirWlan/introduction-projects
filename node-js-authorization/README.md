@@ -32,3 +32,7 @@
 	Main properties&methods:
 		- csrfToken() - function to make a token which should be added to requests which mutate state,
 										this token is validated against the visitor's session or csrf cookie
+
+# connect-flash
+	Main properties&methods:
+		- flash(key, value) - show message by value

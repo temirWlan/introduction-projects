@@ -4,6 +4,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
 const mongoose = require('mongoose');
 const csrf = require('csurf')
+const flash = require('connect-flash');
 const Handlebars = require('handlebars');
 const exphbs  = require('express-handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
@@ -36,6 +37,7 @@ app.use(session({
 	store
 }));
 app.use(csrf());
+app.use(flash());
 app.use(varMiddleware);
 app.use(userMiddleware);
 app.use('/', homeRoutes);
