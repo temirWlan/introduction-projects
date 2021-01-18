@@ -17,21 +17,21 @@ const authRoutes = require('./routes/auth');
 const User = require('./models/user');
 const varMiddleware = require('./middlewares/variables');
 const userMiddleware = require('./middlewares/user');
+const keys = require('./keys');
 
 const app = express();
 
 const PORT = process.env.PORT || 3000;
-const MONGODB_URI = 'mongodb+srv://temirlan:6QzGLVlMhMD3rao0@cluster0.cmepq.mongodb.net/shop';
 
 const store = new MongoStore({
 	collection: 'sessions',
-	uri: MONGODB_URI
+	uri: keys.MONGODB_URI
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(session({
-	secret: 'secret text',
+	secret: keys.SESSION_SECRET,
 	resave: false,
 	saveUninitialized: false,
 	store
@@ -58,7 +58,7 @@ app.set('views', 'views');
 
 async function start() {
 	try {
-		await mongoose.connect(MONGODB_URI, { 
+		await mongoose.connect(keys.MONGODB_URI, { 
 			useNewUrlParser: true,
 			useUnifiedTopology: true
 		});
