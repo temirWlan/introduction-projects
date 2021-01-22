@@ -1,9 +1,11 @@
 const { Router } = require('express');
 const bcrypt = require('bcryptjs');
+const crypto = require('crypto');
 const nodemailer = require('nodemailer');
 const User = require('../models/user');
 const router = Router();
 const regEmail = require('../emails/registration');
+const resetEmail = require('../emails/reset');
 require('dotenv').config();
 
 const transporter = nodemailer.createTransport({
@@ -88,6 +90,72 @@ router.post('/register', async (req, res) => {
 				} else {
 					console.log('Email sent');
 				}
+			});
+		}
+	} catch(e) {
+		console.log(e);
+	}
+});
+
+router.get('/reset', (req, res) => {
+	res.render('reset', {
+		title: 'Password recorery',
+		error: req.flash('error')
+	});
+});
+
+router.post('/reset', (req, res) => {
+	try {
+		crypto.randomBytes(32, async (err, buffer) => {
+			if (err) {
+				req.flash('error', 'Something went wrong. Please try again');
+				return res.redirect('/auth/reset');
+			}
+
+			const token = buffer.toString('hex');
+			const candidate = await User.findOne({ email: req.body.email });
+
+			if (candidate) {
+				candidate.resetToken = token;
+				candidate.resetTokenExp = Date.now() + (60 * 60 * 1000);
+				await candidate.save();
+				await transporter.sendMail(resetEmail(candidate.email, token), (err, data) => {
+					if (err) {
+						throw new Error(err);
+					} else {
+						console.log('Email sent');
+					}
+				});
+				res.redirect('/auth/login');
+			} else {
+				req.flash('Email could not found');
+				res.redirect('/auth/reset');
+			}
+		});
+	} catch(e) {
+
+	}
+});
+
+router.get('/auth/password/:token', async (req, res) => {
+	try {
+		if (!req.params.token) {
+			return res.redirect('/auth/login');
+		}
+
+		const user = User.findOne({
+			resetToken: req.params.token,
+			resetTokenExp: {$gt: Date.now()}
+		});
+
+		if (!user) {
+			res.redirect('/auth/login');
+		} else {
+			res.render('password', {
+				title: 'Password',
+				error: req.flash('error'),
+				userId: user._id.toString(),
+				token: req.params.token
 			});
 		}
 	} catch(e) {
