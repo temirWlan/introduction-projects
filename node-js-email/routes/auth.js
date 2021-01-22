@@ -137,13 +137,13 @@ router.post('/reset', (req, res) => {
 	}
 });
 
-router.get('/auth/password/:token', async (req, res) => {
+router.get('/password/:token', async (req, res) => {
 	try {
 		if (!req.params.token) {
 			return res.redirect('/auth/login');
 		}
 
-		const user = User.findOne({
+		const user = await User.findOne({
 			resetToken: req.params.token,
 			resetTokenExp: {$gt: Date.now()}
 		});
@@ -157,6 +157,30 @@ router.get('/auth/password/:token', async (req, res) => {
 				userId: user._id.toString(),
 				token: req.params.token
 			});
+		}
+	} catch(e) {
+		console.log(e);
+	}
+});
+
+router.post('/password', async (req, res) => {
+	try {
+		const { userId, token } = req.body;
+
+		const user = await User.findOne({
+			_id: userId,
+			resetToken: token,
+			resetTokenExp: {$gt: Date.now()} 
+		});
+
+		if (user) {
+			user.password = await bcrypt.hash(req.body.password, 10);
+			user.resetToken = undefined;
+			user.resetTokenExp = undefined;
+			await user.save();
+			res.redirect('/auth/login');
+		} else {
+			res.redirect('/auth/login');
 		}
 	} catch(e) {
 		console.log(e);
