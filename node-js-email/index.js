@@ -1,4 +1,5 @@
 const path = require('path');
+const dotenv = require('dotenv');
 const express = require('express');
 const session = require('express-session');
 const MongoStore = require('connect-mongodb-session')(session);
@@ -21,6 +22,7 @@ const keys = require('./keys');
 
 const app = express();
 
+dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 const store = new MongoStore({

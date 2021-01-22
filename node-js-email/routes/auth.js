@@ -1,7 +1,18 @@
 const { Router } = require('express');
 const bcrypt = require('bcryptjs');
+const nodemailer = require('nodemailer');
 const User = require('../models/user');
 const router = Router();
+const regEmail = require('../emails/registration');
+require('dotenv').config();
+
+const transporter = nodemailer.createTransport({
+	service: 'gmail',
+	auth: {
+		user: process.env.EMAIL,
+		pass: process.env.PASSWORD
+	}
+});
 
 
 router.get('/login', async (req, res) => {
@@ -70,6 +81,14 @@ router.post('/register', async (req, res) => {
 			});
 			await user.save();
 			res.redirect('/auth/login#login');
+
+			await transporter.sendMail(regEmail(email), (err, data) => {
+				if (err) {
+					throw new Error(err);
+				} else {
+					console.log('Email sent');
+				}
+			});
 		}
 	} catch(e) {
 		console.log(e);
