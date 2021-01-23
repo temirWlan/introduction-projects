@@ -53,7 +53,8 @@ app.use('/auth', authRoutes);
 app.engine('hbs', exphbs({
 	handlebars: allowInsecurePrototypeAccess(Handlebars),
 	defaultLayout: 'main',
-	extname: 'hbs'
+	extname: 'hbs',
+	helpers: require('./utils/hbs-helpers')
 }));
 app.set('view engine', 'hbs');
 app.set('views', 'views');
