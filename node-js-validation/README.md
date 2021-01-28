@@ -9,6 +9,8 @@
 				- withMessage(msg) - show message
 				- isAlphanumeric() - latin 
 				- custom(callback) - add own validator
+				- normalizeEmail() - correct email
+				- trim() - remove spaces
 
 		- validationResult(request) - return errors
 			Main properties&methods:
