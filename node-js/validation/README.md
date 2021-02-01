@@ -15,3 +15,6 @@
 		- validationResult(request) - return errors
 			Main properties&methods:
 				- isEmpty - check empty
+# multer
+	Main properties&methods:
+		- diskStorage
