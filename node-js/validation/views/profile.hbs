@@ -1,0 +1,32 @@
+<h1>Profile</h1>
+
+<div class="row">
+	<div class="col s6">
+		<img class="avatar" src="https://i.pinimg.com/736x/7f/3e/ce/7f3ece10ceb102d8086cbd9da31e60c5--avatar-aang-team-avatar.jpg" alt="avatar">
+		<p>Avatar not found</p>
+	</div>
+	<div class="col s6">
+		<form action="/profile" method="POST">
+			<p>Your email: <b>{{user.email}}</b></p>
+
+			<div class="input-field">
+        <input id="name" name="name" type="text" class="validate" required>
+        <label for="name">Name</label>
+        <span class="helper-text" data-error="Enter correct name" data-success="right"></span>
+      </div>
+
+      <div class="file-field input-field">
+	      <div class="btn">
+	        <span>Avatar</span>
+	        <input name="avatar" type="file">
+	      </div>
+	      <div class="file-path-wrapper">
+	        <input class="file-path validate" type="text">
+	      </div>
+	    </div>
+
+	    <input type="hidden" name="_csrf" value="{{csrf}}">
+	    <button class="btn" type="submit">Edit</button>
+		</form>
+	</div>
+</div>
